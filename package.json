@@ -1,0 +1,224 @@
+{
+  "name": "copilot-god-mode",
+  "displayName": "Copilot God Mode",
+  "description": "AI-powered multi-agent system with 9 omniscient chat modes for complete application development",
+  "version": "0.1.0",
+  "publisher": "imjackinggames-glitch",
+  "icon": "assets/icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Machine Learning",
+    "Other"
+  ],
+  "keywords": [
+    "ai",
+    "llm",
+    "chat",
+    "code-generation",
+    "ollama",
+    "local-ai",
+    "copilot",
+    "assistant"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "chatParticipants": [
+      {
+        "id": "copilot-god-mode.analyzer",
+        "name": "analyzer",
+        "description": "🧠 Omniscient Oracle - Analyzes your idea and orchestrates the perfect development flow",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "analyze",
+            "description": "Deep analysis of your project idea"
+          },
+          {
+            "name": "research",
+            "description": "Market and technical research"
+          }
+        ]
+      },
+      {
+        "id": "copilot-god-mode.designer",
+        "name": "designer",
+        "description": "🎨 Aesthetic Genius - Generates beautiful UI designs using AI",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "design",
+            "description": "Generate UI mockups"
+          },
+          {
+            "name": "gallery",
+            "description": "Open design gallery"
+          }
+        ]
+      },
+      {
+        "id": "copilot-god-mode.architect",
+        "name": "architect",
+        "description": "🏗️ Omniscient Builder - Designs complete system architecture",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "architect",
+            "description": "Create system architecture"
+          },
+          {
+            "name": "diagrams",
+            "description": "Generate architecture diagrams"
+          }
+        ]
+      },
+      {
+        "id": "copilot-god-mode.security",
+        "name": "security",
+        "description": "🔐 Guardian Absolute - Implements military-grade security",
+        "isSticky": true
+      },
+      {
+        "id": "copilot-god-mode.aiml",
+        "name": "aiml",
+        "description": "🤖 Intelligence Architect - AI/ML systems expert",
+        "isSticky": true
+      },
+      {
+        "id": "copilot-god-mode.performance",
+        "name": "performance",
+        "description": "⚡ Speed Demon - Performance optimization master",
+        "isSticky": true
+      },
+      {
+        "id": "copilot-god-mode.integration",
+        "name": "integration",
+        "description": "🔗 Connection Master - Third-party integration expert",
+        "isSticky": true
+      },
+      {
+        "id": "copilot-god-mode.dataengineer",
+        "name": "dataengineer",
+        "description": "📊 Data Wizard - Database and data pipeline architect",
+        "isSticky": true
+      },
+      {
+        "id": "copilot-god-mode.builder",
+        "name": "builder",
+        "description": "🔨 Code Deity - Generates complete, production-ready applications",
+        "isSticky": true
+      }
+    ],
+    "commands": [
+      {
+        "command": "copilot-god-mode.setupServices",
+        "title": "Setup Local Services (Ollama, Stable Diffusion)",
+        "category": "God Mode"
+      },
+      {
+        "command": "copilot-god-mode.startServices",
+        "title": "Start All Services",
+        "category": "God Mode"
+      },
+      {
+        "command": "copilot-god-mode.stopServices",
+        "title": "Stop All Services",
+        "category": "God Mode"
+      },
+      {
+        "command": "copilot-god-mode.openDashboard",
+        "title": "Open Analytics Dashboard",
+        "category": "God Mode"
+      }
+    ],
+    "configuration": {
+      "title": "Copilot God Mode",
+      "properties": {
+        "copilot-god-mode.ollamaUrl": {
+          "type": "string",
+          "default": "http://localhost:11434",
+          "description": "Ollama API URL"
+        },
+        "copilot-god-mode.stableDiffusionUrl": {
+          "type": "string",
+          "default": "http://localhost:7860",
+          "description": "Stable Diffusion API URL"
+        },
+        "copilot-god-mode.chromaUrl": {
+          "type": "string",
+          "default": "http://localhost:8000",
+          "description": "Chroma DB URL"
+        },
+        "copilot-god-mode.defaultModel": {
+          "type": "string",
+          "default": "llama3.1:70b",
+          "enum": [
+            "llama3.1:70b",
+            "codellama:34b",
+            "mistral:7b",
+            "phi3:mini"
+          ],
+          "description": "Default LLM model"
+        },
+        "copilot-god-mode.enableLearning": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable self-improvement and learning"
+        },
+        "copilot-god-mode.enableAnalytics": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable analytics (PostHog)"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test",
+    "setup": "node scripts/setup.js",
+    "start-services": "docker-compose up -d",
+    "stop-services": "docker-compose down"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "ts-loader": "^9.5.1",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.8"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "chroma-js": "^2.4.2",
+    "marked": "^11.1.1",
+    "handlebars": "^4.7.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imjackinggames-glitch/copilot-god-mode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/imjackinggames-glitch/copilot-god-mode/issues"
+  },
+  "homepage": "https://github.com/imjackinggames-glitch/copilot-god-mode#readme",
+  "license": "MIT"
+}

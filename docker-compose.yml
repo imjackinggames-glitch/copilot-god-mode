@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: copilot-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+
+  stable-diffusion:
+    image: ghcr.io/invoke-ai/invokeai:latest
+    container_name: copilot-stable-diffusion
+    ports:
+      - "7860:7860"
+    volumes:
+      - sd-data:/data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    restart: unless-stopped
+    environment:
+      - INVOKEAI_HOST=0.0.0.0
+      - INVOKEAI_PORT=7860
+
+  chroma:
+    image: ghcr.io/chroma-core/chroma:latest
+    container_name: copilot-chroma
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma-data:/chroma/chroma
+    restart: unless-stopped
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+
+  posthog:
+    image: posthog/posthog:latest
+    container_name: copilot-posthog
+    ports:
+      - "8001:8000"
+    volumes:
+      - posthog-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    environment:
+      - SECRET_KEY=your-secret-key-here
+      - DATABASE_URL=postgres://posthog:posthog@postgres:5432/posthog
+      - REDIS_URL=redis://redis:6379/
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: copilot-postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=posthog
+      - POSTGRES_PASSWORD=posthog
+      - POSTGRES_DB=posthog
+
+  redis:
+    image: redis:7-alpine
+    container_name: copilot-redis
+    restart: unless-stopped
+
+volumes:
+  ollama-data:
+  sd-data:
+  chroma-data:
+  posthog-data:
+  postgres-data:
