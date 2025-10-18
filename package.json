@@ -196,6 +196,8 @@
     "@types/vscode": "^1.85.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "20.x",
+    "@types/react": "^18.2.73",
+    "@types/react-dom": "^18.2.24",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
     "eslint": "^8.56.0",
@@ -210,7 +212,9 @@
     "axios": "^1.6.7",
     "chroma-js": "^2.4.2",
     "marked": "^11.1.1",
-    "handlebars": "^4.7.8"
+    "handlebars": "^4.7.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "repository": {
     "type": "git",
