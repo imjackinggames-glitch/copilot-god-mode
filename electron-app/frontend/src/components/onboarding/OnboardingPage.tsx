@@ -1,37 +1,37 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Stepper from "./Stepper";
-import WelcomeStep from "./WelcomeStep";
-import MeetTeamStep from "./MeetTeamStep";
-import DockerCheckStep from "./DockerCheckStep";
-import CopilotCheckStep from "./CopilotCheckStep";
-import CompletionStep from "./CompletionStep";
+import { Stepper } from "./Stepper";
+import { WelcomeStep } from "./WelcomeStep";
+import { MeetTeamStep } from "./MeetTeamStep";
+import { DockerCheckStep } from "./DockerCheckStep";
+import { CopilotCheckStep } from "./CopilotCheckStep";
+import { CompletionStep } from "./CompletionStep";
 
 // Define the step order and metadata
 const steps = [
   {
     id: "welcome",
-    title: "Bem-vindo",
+    label: "Bem-vindo",
     description: "Introdução e visão geral",
   },
   {
     id: "team",
-    title: "Conheça o Time",
+    label: "Conheça o Time",
     description: "Apresentação dos agentes",
   },
   {
     id: "docker",
-    title: "Verificação Docker",
+    label: "Verificação Docker",
     description: "Checagem do ambiente Docker",
   },
   {
     id: "copilot",
-    title: "Verificação Copilot",
+    label: "Verificação Copilot",
     description: "Checagem do Copilot e permissões",
   },
   {
     id: "complete",
-    title: "Pronto!",
+    label: "Pronto!",
     description: "Onboarding finalizado",
   },
 ];
@@ -68,22 +68,24 @@ export default function OnboardingPage() {
       <Stepper
         steps={steps}
         currentStep={currentStep}
-        onStepClick={goTo}
-      />
-      <div className="mt-10 min-h-[420px]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentStep}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 0.4 }}
-            className="w-full h-full"
-          >
-            {renderStep()}
-          </motion.div>
-        </AnimatePresence>
-      </div>
+        maxStep={steps.length - 1}
+        onStep={goTo}
+      >
+        <div className="mt-10 min-h-[420px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentStep}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40 }}
+              transition={{ duration: 0.4 }}
+              className="w-full h-full"
+            >
+              {renderStep()}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </Stepper>
     </div>
   );
 }

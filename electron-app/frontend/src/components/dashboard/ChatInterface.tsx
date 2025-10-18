@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { Send, Loader2 } from 'lucide-react';
 import { AgentPersonality } from '../../config/agent-personalities';
 import { MessageBubble } from './MessageBubble';
+import { Card } from '../ui/card';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
 
 export interface ChatMessage {
   id: string;
@@ -54,7 +57,7 @@ export function ChatInterface({
   };
 
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-lg border-2 bg-card shadow-lg">
+    <Card className="flex h-full flex-col overflow-hidden shadow-lg">
       {/* Agent Header */}
       <div
         className="border-b-2 px-4 py-3"
@@ -173,20 +176,21 @@ export function ChatInterface({
       {/* Input Area */}
       <div className="border-t-2 p-4" style={{ borderColor: agent.color }}>
         <div className="flex items-center gap-2">
-          <input
+          <Input
             ref={inputRef}
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={`Message ${agent.name}...`}
-            className="flex-1 rounded-lg border-2 bg-background px-4 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none"
+            className="flex-1"
             style={{ borderColor: agent.color + '40' }}
           />
-          <button
+          <Button
             onClick={handleSend}
             disabled={!inputValue.trim() || isTyping}
-            className="flex h-10 w-10 items-center justify-center rounded-lg transition-colors disabled:opacity-50"
+            size="sm"
+            className="h-10 w-10 p-0 transition-colors"
             style={{
               backgroundColor: inputValue.trim() ? agent.color : '#3a3a4e',
               color: '#ffffff',
@@ -197,9 +201,9 @@ export function ChatInterface({
             ) : (
               <Send className="h-5 w-5" />
             )}
-          </button>
+          </Button>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }

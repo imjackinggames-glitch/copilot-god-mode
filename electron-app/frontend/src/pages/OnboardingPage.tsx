@@ -11,28 +11,23 @@ import { AnimatePresence } from 'framer-motion';
 const steps: Step[] = [
   {
     id: 'welcome',
-    title: 'Welcome',
-    description: 'Start your journey',
+    label: 'Welcome',
   },
   {
     id: 'meet-team',
-    title: 'Meet the Team',
-    description: 'Get to know your AI agents',
+    label: 'Meet the Team',
   },
   {
     id: 'docker-check',
-    title: 'Docker Check',
-    description: 'Verify Docker environment',
+    label: 'Docker Check',
   },
   {
     id: 'copilot-check',
-    title: 'Copilot Check',
-    description: 'Check GitHub Copilot',
+    label: 'Copilot Check',
   },
   {
     id: 'complete',
-    title: 'Complete',
-    description: 'All set!',
+    label: 'Complete',
   },
 ];
 
@@ -56,8 +51,13 @@ export default function OnboardingPage() {
 
   return (
     <div className="max-w-2xl mx-auto py-12 px-4">
-      <Stepper steps={steps} currentStep={currentStep} onStepClick={handleStepClick} />
-      <div className="relative min-h-[340px]">
+        <Stepper 
+          steps={steps} 
+          currentStep={currentStep} 
+          maxStep={currentStep}
+          onStep={handleStepClick}
+        >
+          <div className="relative min-h-[340px]">
         <AnimatePresence mode="wait" initial={false}>
           {currentStep === 0 && (
             <WelcomeStep key="welcome" onNext={goNext} />
@@ -76,6 +76,7 @@ export default function OnboardingPage() {
           )}
         </AnimatePresence>
       </div>
+        </Stepper>
     </div>
   );
 }

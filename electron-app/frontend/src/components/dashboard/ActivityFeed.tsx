@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { Clock } from 'lucide-react';
 import { AgentPersonality } from '../../config/agent-personalities';
+import { Card } from '../ui/card';
+import { Button } from '../ui/button';
 
 export interface Activity {
   id: string;
@@ -36,7 +38,7 @@ export function ActivityFeed({
   const displayedActivities = activities.slice(0, maxItems);
 
   return (
-    <div className="rounded-lg border-2 border-border bg-card p-6 shadow-lg">
+    <Card className="p-6 shadow-lg">
       {/* Header */}
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-xl font-bold text-foreground">Recent Activity</h2>
@@ -56,8 +58,8 @@ export function ActivityFeed({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.05 }}
-              className="flex items-start gap-3 rounded-lg border-2 border-border bg-background p-3 transition-colors hover:bg-muted"
             >
+              <Card className="flex items-start gap-3 p-3 transition-colors hover:bg-muted">
               {/* Agent Avatar */}
               <div
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
@@ -94,6 +96,7 @@ export function ActivityFeed({
                   {formatTimestamp(activity.timestamp)}
                 </p>
               </div>
+              </Card>
             </motion.div>
           ))
         )}
@@ -101,11 +104,14 @@ export function ActivityFeed({
 
       {/* View All Link */}
       {activities.length > maxItems && (
-        <button className="mt-4 w-full rounded-lg border-2 border-border bg-muted py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted/80">
+        <Button
+          variant="ghost"
+          className="mt-4 w-full"
+        >
           View All Activity ({activities.length})
-        </button>
+        </Button>
       )}
-    </div>
+    </Card>
   );
 }
 

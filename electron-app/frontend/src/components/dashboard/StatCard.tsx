@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Card } from '../ui/card';
 
 interface StatCardProps {
   title: string;
@@ -15,9 +16,11 @@ export function StatCard({ title, value, icon, color, trend }: StatCardProps) {
   return (
     <motion.div
       whileHover={{ scale: 1.02, y: -4 }}
-      className="relative overflow-hidden rounded-lg border-2 bg-card p-6 shadow-lg"
-      style={{ borderColor: color }}
     >
+      <Card
+        className="relative overflow-hidden p-6 shadow-lg"
+        style={{ borderColor: color }}
+      >
       {/* Icon */}
       <div
         className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg"
@@ -61,6 +64,7 @@ export function StatCard({ title, value, icon, color, trend }: StatCardProps) {
           ease: 'easeInOut',
         }}
       />
+      </Card>
     </motion.div>
   );
 }
